@@ -18,48 +18,75 @@ public class AddressBook extends Entry{
 		entries.add(entry);
 		System.out.println("Entry added! \n");
 	}
-
 	
-	public void searchEntries(String searchEmail) {
-		if (getEmail().contains(searchEmail)) {
-			System.out.println("Found it!");
-		} else {
-			System.out.println("Not here!");
+	public void removeEntry(String searchEmail) {
+		for (Entry entry : entries) {
+			if (entry.getEmail().equals(searchEmail)) {
+				System.out.println("Are you sure you want to delete the following contact? (Please type \"y\" for yes and \"n\" for no.)");
+				System.out.println(entry);
+				Scanner input = new Scanner(System.in);
+				String response = input.nextLine();
+				if (response.equals("y")) {
+					entries.remove(entry);
+					System.out.println("This contact has been deleted:" + entry);
+				} 
+			} 
+			else {
+				System.out.println("Contact not found.");
+			}
 		}
-	
 	}
 	
 	
-//	public void removeEntry(String email) {
-//		for (int i = 0; i <entries.size(); i++) {
-//			if (entries.getEmail().equals(email)) {
-//				System.out.println("Email exists");
-////				entries.remove(entry);
-//			}
-//		}	
-//	}
+	public void searchByFirstName(String searchFirstName) {
+		for (Entry entry : entries) {
+			if (entry.getFirstName().contains(searchFirstName)) {
+				System.out.println(entry);
+			} else {
+				System.out.println("No matching contact found.");
+			}
+		}
+	}
+	
+	public void searchByLastName(String searchLastName) {
+		for (Entry entry : entries) {
+			if (entry.getLastName().contains(searchLastName)) {
+				System.out.println(entry);
+			} else {
+				System.out.println("No matching contact found.");
+			}
+		}
+	}
+	
+	public void searchByPhoneNumber(String searchPhoneNumber) {
+		for (Entry entry : entries) {
+			if (entry.getPhoneNumber().contains(searchPhoneNumber)) {
+				System.out.println(entry);
+			} else {
+				System.out.println("No matching contact found.");
+			}
+		}
+	}
+	
+	public void searchByEmailAddress(String searchEmailAddress) {
+		for (Entry entry : entries) {
+			if (entry.getEmail().contains(searchEmailAddress)) {
+				System.out.println(entry);
+			} else {
+				System.out.println("No matching contact found.");
+			}
+		}
+	}
 
 	
 	public void printAddressBook() {
 		if (entries.size() > 0) {
-			System.out.println("Contacts in address book");
+			System.out.println("Contacts in address book:");
 			System.out.println(entries);
 		} else {
-			System.out.println("No contacts in address book.");
+			System.out.println("No contacts in address book.\n");
 		}
 	}
-	
-	
-//	Working ArrayList code
-//	public void printAddressBook() {
-//		if (entries.size() > 0) {
-//			System.out.println("Contacts in address book");
-//			for (int i = 0; i <entries.size(); i++)
-//			System.out.println(entries.get(i));
-//		} else {
-//			System.out.println("No contacts in address book.");
-//		}
-//	}
 	
 	public void deleteAddressBook() {
 		int i = 0;
@@ -101,7 +128,6 @@ public class AddressBook extends Entry{
 		return Objects.equals(entries, other.entries);
 	}
 	
-	
 	public static void main(String[] args) {
 //		Create address book that contains an ArrayList of entries		
 		AddressBook addressBook = new AddressBook();
@@ -142,14 +168,43 @@ public class AddressBook extends Entry{
 					
 					addressBook.addEntry(newEntry);
 					break;
-	//			case 2:
-	//				addressBook.removeEntry(email);
-	//				break;
-				case 3:
+				case 2:
 					System.out.println("Please enter email address to find contact.");
 					String searchEmail = input.nextLine();
+					addressBook.removeEntry(searchEmail);
+					break;
+				case 3:
+					System.out.println("How would you like to search contacts? (Enter number)"
+							+ "\n1. First Name"
+							+ "\n2. Last Name"
+							+ "\n3. Phone Number"
+							+ "\n4. Email Address");
+					String searchBy = input.nextLine();
+						switch (searchBy) {
+							case "1":
+								System.out.println("Enter first name.");
+								String searchFirstName = input.nextLine();
+								addressBook.searchByFirstName(searchFirstName);
+								break;
+							case "2":
+								System.out.println("Enter last name.");
+								String searchLastName = input.nextLine();
+								addressBook.searchByLastName(searchLastName);
+								break;
+							case "3":
+								System.out.println("Enter phone number.");
+								String searchPhoneNumber = input.nextLine();
+								addressBook.searchByPhoneNumber(searchPhoneNumber);
+								break;
+							case "4":
+								System.out.println("Enter email address.");
+								String searchEmailAddress = input.nextLine();
+								addressBook.searchByEmailAddress(searchEmailAddress);
+								break;
+							default:
+								System.out.println("Invalid selection.");
+						}
 					
-					addressBook.searchEntries(searchEmail);
 					break;
 				case 4:
 					addressBook.printAddressBook();
@@ -162,15 +217,12 @@ public class AddressBook extends Entry{
 					i = -1;
 					break;
 				default:
-					System.out.println("Please make a valid selection.");
+					System.out.println("Invalid selection.\n");
 					i = 0;
 			}
 		}
 	}
-	
-
-//		System.out.println(addressBook.entries.contains("reka"));
-//		System.out.println(addressBook.entries.size());
 }
+
 
 	
